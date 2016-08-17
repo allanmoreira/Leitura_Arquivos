@@ -55,13 +55,13 @@ public class LeituraGravacaoArquivo {
     /**
      * Troca todas as ocorrências de uma string @palavraAntiga por uma string @novaPalavra em um arquivo.
      *
-     * @param caminhoCompletoArquivo
-     * @param palavraAntiga
-     * @param novaPalavra
+     * @param caminhoCompletoArquivo localização do arquivo a ser editado
+     * @param palavraAntiga palavra a ser pesquisada e posteriormente trocada
+     * @param novaPalavra palavra a ser substituída pela pesquisada
      */
     public void  editar(String caminhoCompletoArquivo, String palavraAntiga, String novaPalavra) {
-        FileInfo fileInfo = new FileInfo(caminhoCompletoArquivo, '/');
-        String diretorioArquivo = fileInfo.getFilePath();
+        FileInfo fileInfo = new FileInfo(new File(caminhoCompletoArquivo));
+        String diretorioArquivo = fileInfo.getCaminhoArquivo();
         List<String> lines = new ArrayList<>();
         String line;
 
@@ -101,9 +101,9 @@ public class LeituraGravacaoArquivo {
             FileReader f = new FileReader(nomeArq);
             BufferedReader buf = new BufferedReader(f);
             try {
-                // Le as informacoes do arquivo (apenas uma linha)
                 String line;
                 String[] str;
+                // Le as informacoes do arquivo (apenas uma linha por vez)
                 while ((line = buf.readLine()) != null) {
                     // Opção 1: quebra a linha lida em string tendo como divisor o caracter definido por parametro
                     str = line.split(";");
